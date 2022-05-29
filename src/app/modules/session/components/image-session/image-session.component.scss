@@ -1,0 +1,56 @@
+.image-session {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	img {
+		height: 100%;
+	}
+}
+
+.image-zoom {
+	z-index: 2;
+	width: 100vw;
+	gap: 10px;
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	background: transparent;
+	top: 5px;
+	button {
+		transform: scale(0.7);
+	}
+}
+
+.image-container {
+	height: 95vh;
+	margin-top: 3vh;
+	overflow: auto;
+	position: relative;
+}
+
+.image-posterize {
+	height: 98%;
+	position: absolute;
+	z-index: 2;
+	left: 0%;
+	opacity: 0.6;
+}
+::-webkit-scrollbar {
+	height: 8px;
+	width: 8px;
+	background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #4d4d4d;
+	-webkit-border-radius: 1ex;
+	-webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+}
+
+::-webkit-scrollbar-corner {
+	background: #000;
+}

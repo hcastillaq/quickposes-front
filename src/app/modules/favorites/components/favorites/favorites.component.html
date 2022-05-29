@@ -1,0 +1,34 @@
+<br />
+<div fxLayout="row" fxLayoutAlign="end center">
+	<button mat-raised-button routerLink="/" style="margin-right: 30px">
+		Go to home
+	</button>
+</div>
+<br />
+<div
+	*ngIf="!favorites.length && !loading"
+	fxLayout="row"
+	fxLayoutAlign="center center"
+>
+	<span>Not found favorites</span>
+</div>
+<div *ngIf="loading" fxLayout="row" fxLayoutAlign="center center">
+	<span>loading ...</span>
+</div>
+<div class="favorites">
+	<div *ngFor="let favorite of favorites">
+		<div class="favorite-card">
+			<div class="image">
+				<img [src]="favorite.url" />
+			</div>
+			<div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
+				<button mat-icon-button (click)="open(favorite)">
+					<mat-icon> open_in_new </mat-icon>
+				</button>
+				<button mat-icon-button (click)="remove(favorite)">
+					<mat-icon>delete</mat-icon>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

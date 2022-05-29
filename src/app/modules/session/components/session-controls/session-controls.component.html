@@ -1,0 +1,57 @@
+<div class="toggle-session-controls">
+	<button mat-mini-fab color="primary" (click)="hide()">
+		<mat-icon>{{ show ? 'visibility' : 'visibility_off' }}</mat-icon>
+	</button>
+</div>
+
+<div class="session-controls" *ngIf="show">
+	<div class="favorites">
+		<button mat-icon-button (click)="toggleFavorite()">
+			<mat-icon>{{ getFavoriteIcon() }}</mat-icon>
+		</button>
+	</div>
+	<div class="buttons">
+		<button
+			mat-raised-button
+			color="primary"
+			(click)="back()"
+			[disabled]="!validBack"
+		>
+			<
+		</button>
+		<button
+			mat-raised-button
+			color="primary"
+			(click)="next()"
+			[disabled]="!validNext"
+		>
+			>
+		</button>
+	</div>
+	<div class="posterize">
+		<mat-form-field>
+			<input
+				matInput
+				type="number"
+				placeholder="Levels"
+				min="3"
+				max="8"
+				[formControl]="values"
+			/>
+		</mat-form-field>
+		<button
+			mat-stroked-button
+			color="primary"
+			[disabled]="values.invalid"
+			(click)="posterize()"
+		>
+			posterize
+		</button>
+		<button mat-stroked-button color="primary" (click)="normal()">
+			Normal
+		</button>
+	</div>
+	<div>
+		<a routerLink="/">Close</a>
+	</div>
+</div>

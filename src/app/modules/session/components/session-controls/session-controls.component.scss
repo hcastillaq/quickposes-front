@@ -1,0 +1,47 @@
+.session-controls {
+	width: 140px;
+	position: absolute;
+	right: 30px;
+	top: 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: end;
+	align-items: center;
+	background-color: rgb(255, 255, 255);
+	padding: 20px 50px;
+	gap: 20px;
+	z-index: 9;
+
+	.buttons {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+		button {
+			width: 40px;
+			font-size: 1.5rem;
+		}
+	}
+
+	.posterize {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.favorites {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: red;
+	}
+}
+
+.toggle-session-controls {
+	position: absolute;
+	z-index: 10;
+	top: 0px;
+	right: 30px;
+	top: 20px;
+}
