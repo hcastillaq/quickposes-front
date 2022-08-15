@@ -1,12 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { JwtService } from '../jwt/jwt.service';
 
 export interface IImage {
-	url: string;
 	posterize: string | undefined;
-	path: string;
 	baseUrl: string;
 }
 
@@ -21,7 +20,7 @@ export class ImagesService {
 	loading = new BehaviorSubject(true);
 	favorites: IImage[] = [];
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient, private jwtService: JwtService) {}
 
 	validateTypeFile(file: File): boolean {
 		const types = ['jpg', 'png', 'jpeg'];
@@ -63,9 +62,7 @@ export class ImagesService {
 			const img = this.images[this.index];
 			if (img && img instanceof File) {
 				const url = await this.toBase64(img);
-				const imgOb = {
-					url,
-					path: img.webkitRelativePath,
+				const imgOb: IImage = {
 					posterize: undefined,
 					baseUrl: url,
 				};
@@ -113,11 +110,11 @@ export class ImagesService {
 			.post(environment.api + '/images/posterize', {
 				url: this.image?.baseUrl,
 				levels: levels,
+				token: this.jwtService.get() || undefined,
 			})
 			.subscribe({
 				next: (resp: any) => {
 					if (this.image) {
-						this.image.url = resp.base64 as string;
 						this.image.posterize = resp.base64 as string;
 						this.change.next(this.image);
 						this.loading.next(false);
@@ -131,51 +128,55 @@ export class ImagesService {
 
 	normal() {
 		if (this.image) {
-			this.image.url = this.image.baseUrl;
 			this.image.posterize = undefined;
 			this.change.next(this.image);
 		}
 	}
 
-	toggleFavorite(image?: IImage): Promise<'add' | 'remove'> {
+	toggleFavorite(image: IImage): Promise<boolean> {
 		return new Promise((resolve) => {
 			this.http
-				.post(environment.api + '/images/favorites', {
-					image: image ? image : { ...this.image, url: this.image?.baseUrl },
+				.post(environment.api + '/images/favorites/toggle', {
+					baseUrl: image.baseUrl,
+					token: this.jwtService.get() || undefined,
 				})
 				.subscribe({
 					next: (resp: any) => {
-						if (resp.action === 'add' && this.image?.baseUrl) {
-							this.favorites.push({
-								...this.image,
-								url: this.image.baseUrl,
-							});
+						if (resp.action === true) {
+							this.favorites.push(image);
 						} else {
 							this.favorites = this.favorites.filter(
-								(fav) => fav.path !== this.image?.path
+								(favorite) => favorite.baseUrl !== image.baseUrl
 							);
 						}
-
 						resolve(resp.action);
 					},
 				});
 		});
 	}
 
-	getFavorites(): Promise<IImage[]> {
+	getFavorites(): Promise<any> {
 		return new Promise((resolve) => {
-			this.http.get(environment.api + '/images/favorites').subscribe({
-				next: (resp: any) => {
-					this.favorites = resp;
-					resolve(this.favorites);
-				},
-			});
+			this.http
+				.post(environment.api + '/images/favorites', {
+					token: this.jwtService.get() || undefined,
+				})
+				.subscribe({
+					next: (resp: any) => {
+						const favorites = resp.map((fav: string) => ({
+							baseUrl: fav,
+							posterize: undefined,
+						}));
+						this.favorites = [...favorites];
+						resolve(favorites);
+					},
+				});
 		});
 	}
 
 	validateFavorite(): boolean {
 		const find = this.favorites.find(
-			(favorite) => favorite.path === this.image?.path
+			(favorite) => favorite.baseUrl === this.image?.baseUrl
 		);
 		return find ? true : false;
 	}

@@ -1,6 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ImagesService } from 'src/app/services/images/images.service';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 
 @Component({
 	selector: 'app-session-controls',
@@ -17,7 +18,11 @@ export class SessionControlsComponent implements OnInit, OnDestroy {
 	]);
 	favorite: 'add' | 'remove' = 'add';
 	show = true;
-	constructor(private imagesService: ImagesService) {}
+	isLogged = this.jwtService.get() || false;
+	constructor(
+		private imagesService: ImagesService,
+		private jwtService: JwtService
+	) {}
 
 	ngOnInit(): void {
 		this.validate();
@@ -88,9 +93,12 @@ export class SessionControlsComponent implements OnInit, OnDestroy {
 	}
 
 	toggleFavorite() {
-		this.imagesService.toggleFavorite().then((action) => {
-			this.favorite = action;
-		});
+		const img = this.imagesService.image;
+		if (img) {
+			this.imagesService.toggleFavorite(img).then((action) => {
+				this.favorite = action ? 'add' : 'remove';
+			});
+		}
 	}
 
 	getFavoriteIcon() {

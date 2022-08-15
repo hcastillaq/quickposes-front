@@ -5,7 +5,7 @@
 </div>
 
 <div class="session-controls" *ngIf="show">
-	<div class="favorites">
+	<div class="favorites" *ngIf="isLogged">
 		<button mat-icon-button (click)="toggleFavorite()">
 			<mat-icon>{{ getFavoriteIcon() }}</mat-icon>
 		</button>

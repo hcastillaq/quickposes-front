@@ -20,3 +20,21 @@ body {
 	background-color: var(--green);
 	color: white;
 }
+
+.mat-snack-bar-container {
+	width: fit-content !important;
+	min-width: fit-content !important;
+}
+.mat-snack-bar-container span {
+	font-size: 1.2rem !important;
+	margin: 0px 20px;
+}
+.mat-snack-bar-container.error {
+	background-color: var(--red);
+	color: white;
+}
+
+.mat-snack-bar-container.success {
+	background-color: var(--green);
+	color: white;
+}

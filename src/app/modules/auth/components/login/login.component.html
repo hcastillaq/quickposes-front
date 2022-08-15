@@ -1,0 +1,44 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+	<mat-card >
+		<mat-card-content fxLayout="column" fxLayoutGap="20px">
+			<div >
+				<button mat-button>
+					<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px" [routerLink]="['/']" >
+						<mat-icon>arrow_back</mat-icon>
+						<span>Go to Home</span>
+					</div>
+				</button>
+			</div>
+			<form fxLayout="column" [formGroup]="form"  (ngSubmit)="onSubmit()">
+				<mat-form-field class="" appearance="fill">
+					<mat-label>Email</mat-label>
+					<input matInput placeholder="user@example.com" required type="email" formControlName="email">
+				</mat-form-field>
+				<mat-form-field class="" appearance="fill">
+					<mat-label>Password</mat-label>
+					<input type="password" matInput required formControlName="password">
+				</mat-form-field>
+				<div fxLayout="row" fxLayoutAlign="center">
+					<button
+					id="btnSubmit"
+						fxFlex="100%"
+						mat-raised-button
+						color="primary"
+						[disabled]="form.invalid || loading" 
+						fxLayout="row"
+						fxLayoutAlign="center center"
+					>
+						<mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+						<span *ngIf="!loading">Login</span>
+					</button>
+				</div>
+				<br>
+				<div fxLayout="row" fxLayoutAlign="center center" >
+					<u>
+						<a [routerLink]="['/auth/register']">Register</a>
+					</u>
+				</div>
+			</form>
+		</mat-card-content>
+	</mat-card>
+</div>

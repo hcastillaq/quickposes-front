@@ -26,8 +26,11 @@ export class FavoritesComponent implements OnInit {
 	}
 
 	remove(favorite: IImage) {
-		this.favorites = this.favorites.filter((fav) => fav.path !== favorite.path);
-		this.imageService.toggleFavorite(favorite);
+		this.imageService.toggleFavorite(favorite).then(() => {
+			this.favorites = this.favorites.filter(
+				(fav) => fav.baseUrl !== favorite.baseUrl
+			);
+		});
 	}
 
 	open(favorite: IImage) {

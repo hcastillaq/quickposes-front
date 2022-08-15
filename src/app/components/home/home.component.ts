@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ImagesService } from 'src/app/services/images/images.service';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 
 @Component({
 	selector: 'app-home',
@@ -10,7 +11,13 @@ import { ImagesService } from 'src/app/services/images/images.service';
 export class HomeComponent implements OnInit {
 	files: File[] = [];
 	url = undefined;
-	constructor(private imagesService: ImagesService, private router: Router) {}
+	isLogged = this.jwtService.get() || false;
+
+	constructor(
+		private imagesService: ImagesService,
+		private router: Router,
+		private jwtService: JwtService
+	) {}
 	ngOnInit(): void {}
 
 	async changeFolder(event: Event) {
@@ -29,7 +36,7 @@ export class HomeComponent implements OnInit {
 		}
 	}
 
-	shuffle(array: any[]) {
+	shuffle(array: any[]): Array<any> {
 		let currentIndex = array.length,
 			randomIndex;
 		while (currentIndex != 0) {
@@ -44,7 +51,6 @@ export class HomeComponent implements OnInit {
 	}
 
 	continue(): void {
-		this.imagesService.getFavorites();
 		this.router.navigateByUrl('/session');
 	}
 }

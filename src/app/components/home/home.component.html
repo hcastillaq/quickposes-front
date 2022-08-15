@@ -34,8 +34,11 @@
 					Continue
 				</button>
 			</div>
-			<div fxLayout="row" fxLayoutAlign="center">
+			<div fxLayout="row" fxLayoutAlign="center" *ngIf="isLogged">
 				<a routerLink="/favorites">Go to favorites</a>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="center" *ngIf="!isLogged">  
+				<a routerLink="/auth/login">Login</a>
 			</div>
 		</mat-card-content>
 	</mat-card>

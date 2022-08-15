@@ -19,7 +19,7 @@
 	<div *ngFor="let favorite of favorites">
 		<div class="favorite-card">
 			<div class="image">
-				<img [src]="favorite.url" />
+				<img [src]="favorite.baseUrl" />
 			</div>
 			<div class="actions" fxLayout="row" fxLayoutAlign="space-between center">
 				<button mat-icon-button (click)="open(favorite)">

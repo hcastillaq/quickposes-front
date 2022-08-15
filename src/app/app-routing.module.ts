@@ -15,6 +15,11 @@ const routes: Routes = [
 			),
 	},
 	{
+		path: 'auth',
+		loadChildren: () =>
+			import('./modules/auth/auth.module').then((m) => m.AuthModule),
+	},
+	{
 		path: 'session',
 		loadChildren: () =>
 			import('./modules/session/session.module').then((m) => m.SessionModule),
