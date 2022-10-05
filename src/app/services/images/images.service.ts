@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, catchError, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { JwtService } from '../jwt/jwt.service';
 
@@ -156,11 +156,17 @@ export class ImagesService {
 	}
 
 	getFavorites(): Promise<any> {
-		return new Promise((resolve) => {
+		return new Promise((resolve, reject) => {
 			this.http
 				.post(environment.api + '/images/favorites', {
 					token: this.jwtService.get() || undefined,
 				})
+				.pipe(
+					catchError((e) => {
+						reject(e);
+						return [];
+					})
+				)
 				.subscribe({
 					next: (resp: any) => {
 						const favorites = resp.map((fav: string) => ({

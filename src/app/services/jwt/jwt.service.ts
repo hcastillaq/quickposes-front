@@ -14,4 +14,8 @@ export class JwtService {
 	get(): string | null {
 		return localStorage.getItem(this.key);
 	}
+
+	clear() {
+		localStorage.removeItem(this.key);
+	}
 }

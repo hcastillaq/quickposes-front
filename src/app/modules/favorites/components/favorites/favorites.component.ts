@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { IImage, ImagesService } from 'src/app/services/images/images.service';
+import { JwtService } from 'src/app/services/jwt/jwt.service';
 
 @Component({
 	selector: 'app-favorites',
@@ -10,7 +12,12 @@ import { IImage, ImagesService } from 'src/app/services/images/images.service';
 export class FavoritesComponent implements OnInit {
 	favorites: IImage[] = [];
 	loading: boolean = false;
-	constructor(private imageService: ImagesService, private router: Router) {}
+	constructor(
+		private imageService: ImagesService,
+		private router: Router,
+		private jwtService: JwtService,
+		private snackbar: MatSnackBar
+	) {}
 
 	ngOnInit(): void {
 		this.loading = true;
@@ -22,6 +29,10 @@ export class FavoritesComponent implements OnInit {
 			})
 			.catch((e) => {
 				this.loading = false;
+				console.error(e);
+				this.jwtService.clear();
+				this.openSnack('Session expired', 'error');
+				this.router.navigateByUrl('/');
 			});
 	}
 
@@ -36,5 +47,14 @@ export class FavoritesComponent implements OnInit {
 	open(favorite: IImage) {
 		this.imageService.setImages([favorite]);
 		this.router.navigateByUrl('/session');
+	}
+
+	openSnack(message: string, type: string) {
+		this.snackbar.open(message, '', {
+			duration: 3000,
+			horizontalPosition: 'right',
+			verticalPosition: 'top',
+			panelClass: type,
+		});
 	}
 }
