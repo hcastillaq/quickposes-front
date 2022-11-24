@@ -37,11 +37,16 @@ export class FavoritesComponent implements OnInit {
 	}
 
 	remove(favorite: IImage) {
-		this.imageService.toggleFavorite(favorite).then(() => {
-			this.favorites = this.favorites.filter(
-				(fav) => fav.baseUrl !== favorite.baseUrl
-			);
-		});
+		this.imageService
+			.toggleFavorite(favorite)
+			.then(() => {
+				this.favorites = this.favorites.filter(
+					(fav) => fav.baseUrl !== favorite.baseUrl
+				);
+			})
+			.catch((e) => {
+				this.openSnack('Session expirada, por favor inicie session.', 'error');
+			});
 	}
 
 	open(favorite: IImage) {

@@ -1,5 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ImagesService } from 'src/app/services/images/images.service';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
 
@@ -21,7 +22,8 @@ export class SessionControlsComponent implements OnInit, OnDestroy {
 	isLogged = this.jwtService.get() || false;
 	constructor(
 		private imagesService: ImagesService,
-		private jwtService: JwtService
+		private jwtService: JwtService,
+		private snackbar: MatSnackBar
 	) {}
 
 	ngOnInit(): void {
@@ -95,12 +97,27 @@ export class SessionControlsComponent implements OnInit, OnDestroy {
 	toggleFavorite() {
 		const img = this.imagesService.image;
 		if (img) {
-			this.imagesService.toggleFavorite(img).then((action) => {
-				this.favorite = action ? 'add' : 'remove';
-			});
+			this.imagesService
+				.toggleFavorite(img)
+				.then((action) => {
+					this.favorite = action ? 'add' : 'remove';
+				})
+				.catch((err) => {
+					this.openSnack(
+						'Session expirada, por favor inicie session.',
+						'error'
+					);
+				});
 		}
 	}
-
+	openSnack(message: string, type: string) {
+		this.snackbar.open(message, '', {
+			duration: 3000,
+			horizontalPosition: 'right',
+			verticalPosition: 'top',
+			panelClass: type,
+		});
+	}
 	getFavoriteIcon() {
 		return this.favorite === 'add' ? 'favorite' : 'favorite_border';
 	}
