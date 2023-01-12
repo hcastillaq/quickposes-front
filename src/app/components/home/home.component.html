@@ -1,10 +1,10 @@
-<div fxLayout="row" fxLayoutAlign="center center">
-	<mat-card fxFlex="300px">
-		<mat-card-content fxLayout="column" fxLayoutGap="20px">
-			<div fxLayout="row" fxLayoutAlign="center">
-				<span>selected {{ files.length }} images</span>
+<div class="login-page">
+	<mat-card appearance="outlined">
+		<mat-card-content>
+			<div class="mb2 center">
+				<span> selected {{ files.length }} images</span>
 			</div>
-			<div fxLayout="row" fxLayoutAlign="center">
+			<div class="mb2 center">
 				<input
 					type="file"
 					webkitdirectory
@@ -13,19 +13,14 @@
 					hidden
 					(change)="changeFolder($event)"
 				/>
-				<button
-					mat-stroked-button
-					color="accent"
-					(click)="inputFolder.click()"
-					fxFlex="100%"
-				>
+
+				<button mat-stroked-button color="accent" (click)="inputFolder.click()">
 					Select folder
 				</button>
 			</div>
 
-			<div fxLayout="row" fxLayoutAlign="center">
+			<div class="center">
 				<button
-					fxFlex="100%"
 					mat-raised-button
 					color="primary"
 					[disabled]="!files.length"
@@ -34,11 +29,20 @@
 					Continue
 				</button>
 			</div>
-			<div fxLayout="row" fxLayoutAlign="center" *ngIf="isLogged">
-				<a routerLink="/favorites">Go to favorites</a>
-			</div>
-			<div fxLayout="row" fxLayoutAlign="center" *ngIf="!isLogged">  
-				<a routerLink="/auth/login">Login</a>
+
+			<div class="center mt2">
+				<div *ngIf="isLogged && !loading">
+					<a routerLink="/favorites">Go to favorites</a>
+				</div>
+				<div *ngIf="!isLogged" (click)="login()">
+					<button mat-button>
+						<span *ngIf="!loading">Login with google</span>
+						<mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+					</button>
+				</div>
+				<div *ngIf="isLogged && !loading" (click)="logout()" class="mt1">
+					<button mat-button>Logout</button>
+				</div>
 			</div>
 		</mat-card-content>
 	</mat-card>

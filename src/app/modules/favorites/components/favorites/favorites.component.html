@@ -1,20 +1,17 @@
-<br />
-<div fxLayout="row" fxLayoutAlign="end center">
+<div class="flex flex justify-end pt2">
 	<button mat-raised-button routerLink="/" style="margin-right: 30px">
 		Go to home
 	</button>
 </div>
-<br />
-<div
-	*ngIf="!favorites.length && !loading"
-	fxLayout="row"
-	fxLayoutAlign="center center"
->
-	<span>Not found favorites</span>
+<div class="mt4" *ngIf="!favorites.length || loading">
+	<div *ngIf="!favorites.length && !loading" class="center">
+		<span>Not found favorites</span>
+	</div>
+	<div *ngIf="loading" class="center">
+		<span class="center">loading...</span>
+	</div>
 </div>
-<div *ngIf="loading" fxLayout="row" fxLayoutAlign="center center">
-	<span>loading ...</span>
-</div>
+
 <div class="favorites">
 	<div *ngFor="let favorite of favorites">
 		<div class="favorite-card">

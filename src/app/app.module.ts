@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { MaterialModule } from './modules/material/material.module';
-import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [AppComponent, HomeComponent],
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 		BrowserAnimationsModule,
 		MaterialModule,
 		HttpClientModule,
+		OAuthModule.forRoot(),
 	],
 	providers: [],
 	bootstrap: [AppComponent],

@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import {
+	UntypedFormControl,
+	UntypedFormGroup,
+	Validators,
+} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
+import { OauthService } from 'src/app/services/oauth/oauth.service';
 
 @Component({
 	selector: 'app-login',
@@ -21,8 +26,11 @@ export class LoginComponent implements OnInit {
 		private authService: AuthService,
 		private snackbar: MatSnackBar,
 		private jwtService: JwtService,
-		private router: Router
+		private router: Router,
+		private google: OauthService
 	) {}
+
+	ngOnInit(): void {}
 
 	onSubmit(): void {
 		this.loading = true;
@@ -51,5 +59,4 @@ export class LoginComponent implements OnInit {
 			panelClass: type,
 		});
 	}
-	ngOnInit(): void {}
 }

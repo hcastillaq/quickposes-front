@@ -2,6 +2,8 @@
 	display: grid;
 	gap: 40px;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	max-width: 80%;
+	margin: 60px auto;
 	.favorite-card {
 		width: auto;
 		min-width: 200px;

@@ -4,7 +4,7 @@
 	</button>
 </div>
 
-<div class="session-controls" *ngIf="show">
+<div [class.mat-elevation-z8]="true" class="session-controls" *ngIf="show">
 	<div class="favorites" *ngIf="isLogged">
 		<button mat-icon-button (click)="toggleFavorite()">
 			<mat-icon>{{ getFavoriteIcon() }}</mat-icon>
