@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
 import { IImage, ImagesService } from 'src/app/services/images/images.service';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
