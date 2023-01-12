@@ -1,5 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ImagesService } from 'src/app/services/images/images.service';
 import { JwtService } from 'src/app/services/jwt/jwt.service';
@@ -12,7 +12,7 @@ import { JwtService } from 'src/app/services/jwt/jwt.service';
 export class SessionControlsComponent implements OnInit, OnDestroy {
 	validBack = true;
 	validNext = true;
-	values = new FormControl(3, [
+	values = new UntypedFormControl(3, [
 		Validators.required,
 		Validators.min(3),
 		Validators.max(8),

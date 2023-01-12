@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -11,10 +11,10 @@ import { JwtService } from 'src/app/services/jwt/jwt.service';
 	styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-	form: FormGroup = new FormGroup({
-		email: new FormControl('', [Validators.required, Validators.email]),
-		password: new FormControl('', [Validators.required]),
-		password2: new FormControl('', [Validators.required]),
+	form: UntypedFormGroup = new UntypedFormGroup({
+		email: new UntypedFormControl('', [Validators.required, Validators.email]),
+		password: new UntypedFormControl('', [Validators.required]),
+		password2: new UntypedFormControl('', [Validators.required]),
 	});
 	loading: boolean = false;
 
